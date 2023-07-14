@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+  <arg name="pipeline" default="ompl" />
+  <arg name="paused" default="true"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="rviz" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/> 
+
+  <include file="$(find ur_cable_manipulation)/launch/dual_arm.launch">
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    
+  </include> 
+
+  <!-- <node name="move_ur5_arm" type="move_demo" pkg="ur_cable_manipulation" output = "screen"/> -->
+
+  <!-- <node name="grasp" type="grasp_box" pkg="ur_cable_manipulation" output = "screen"/> -->
+
+  <!-- <node name="cable_manipulation_demo" type="cable_grasp" pkg="ur_cable_manipulation" output = "screen"/> -->
+
+  <!-- <node name="cable_manipulation_v2" type="cable_grasping" pkg="ur_cable_manipulation" output = "screen"/> -->
+
+  <!-- <node name="joint_trajectory_publisher" type="command_pub" pkg="ur_cable_manipulation" output = "screen"/> -->
+
+  <node name="slave_controller" type="slave_controller" pkg="ur_cable_manipulation" output = "screen"/>
+
+  <node name="master_controller" type="master_controller" pkg="ur_cable_manipulation" output = "screen"/>
+
+  <!-- <node name="demo_jacobian" type="demo_jacobian" pkg="ur_cable_manipulation" output = "screen"/> -->
+
+  <!-- <group if="$(arg rviz)">
+    <node type="rviz" name="rviz" pkg="rviz" />
+  </group>  -->
+
+</launch>

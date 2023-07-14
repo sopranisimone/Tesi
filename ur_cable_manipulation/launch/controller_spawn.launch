@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name = "robot_name"   default = "ur5_"/>
+
+    <!-- Trajectory controller -->
+    <rosparam file="$(find ur_cable_manipulation)/config/arm_controller.yaml" command="load" subst_value="True"/>
+    <node name="$(arg robot_name)arm_ctrl_spwn"  pkg="controller_manager" type="spawner" respawn="false" output="screen" args="$(arg robot_name)arm_controller" />
+
+</launch>

@@ -1,0 +1,87 @@
+$(arg robot_name)arm_velocity_controller:
+  type: velocity_controllers/JointGroupVelocityController
+  joints:
+     - $(arg robot_name)shoulder_pan_joint
+     - $(arg robot_name)shoulder_lift_joint
+     - $(arg robot_name)elbow_joint
+     - $(arg robot_name)wrist_1_joint
+     - $(arg robot_name)wrist_2_joint
+     - $(arg robot_name)wrist_3_joint
+  constraints:
+      goal_time: 0.6
+      stopped_velocity_tolerance: 0.05
+      $(arg robot_name)shoulder_pan_joint: {trajectory: 0.1, goal: 0.1}
+      $(arg robot_name)shoulder_lift_joint: {trajectory: 0.1, goal: 0.1}
+      $(arg robot_name)elbow_joint: {trajectory: 0.1, goal: 0.1}
+      $(arg robot_name)wrist_1_joint: {trajectory: 0.1, goal: 0.1}
+      $(arg robot_name)wrist_2_joint: {trajectory: 0.1, goal: 0.1}
+      $(arg robot_name)wrist_3_joint: {trajectory: 0.1, goal: 0.1}
+  stop_trajectory_duration: 0.5
+  state_publish_rate:  25
+  action_monitor_rate: 10  
+
+$(arg robot_name)arm_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+     - $(arg robot_name)shoulder_pan_joint
+     - $(arg robot_name)shoulder_lift_joint
+     - $(arg robot_name)elbow_joint
+     - $(arg robot_name)wrist_1_joint
+     - $(arg robot_name)wrist_2_joint
+     - $(arg robot_name)wrist_3_joint
+  constraints:
+      goal_time: 0.6
+      stopped_velocity_tolerance: 0.05
+      $(arg robot_name)shoulder_pan_joint: {trajectory: 0.1, goal: 0.1}
+      $(arg robot_name)shoulder_lift_joint: {trajectory: 0.1, goal: 0.1}
+      $(arg robot_name)elbow_joint: {trajectory: 0.1, goal: 0.1}
+      $(arg robot_name)wrist_1_joint: {trajectory: 0.1, goal: 0.1}
+      $(arg robot_name)wrist_2_joint: {trajectory: 0.1, goal: 0.1}
+      $(arg robot_name)wrist_3_joint: {trajectory: 0.1, goal: 0.1}
+  stop_trajectory_duration: 0.5
+  state_publish_rate:  25
+  action_monitor_rate: 10
+  stopped: true
+
+$(arg robot_name)joint_group_pos_controller:
+  type: position_controllers/JointGroupPositionController
+  joints:
+     - $(arg robot_name)shoulder_pan_joint
+     - $(arg robot_name)shoulder_lift_joint
+     - $(arg robot_name)elbow_joint
+     - $(arg robot_name)wrist_1_joint
+     - $(arg robot_name)wrist_2_joint
+     - $(arg robot_name)wrist_3_joint
+
+$(arg robot_name)eff_joint_traj_controller:
+  type: effort_controllers/JointTrajectoryController
+  joints: &robot_joints
+    - $(arg robot_name)shoulder_pan_joint
+    - $(arg robot_name)shoulder_lift_joint
+    - $(arg robot_name)elbow_joint
+    - $(arg robot_name)wrist_1_joint
+    - $(arg robot_name)wrist_2_joint
+    - $(arg robot_name)wrist_3_joint
+  gains: # Required because we're controlling an effort interface
+    $(arg robot_name)shoulder_pan_joint: {p: 4000,  d: 200, i: 1, i_clamp: 1}
+    $(arg robot_name)shoulder_lift_joint: {p: 10000,  d: 200, i: 1, i_clamp: 1}
+    $(arg robot_name)elbow_joint: {p: 2000,  d: 20, i: 1, i_clamp: 1}
+    $(arg robot_name)wrist_1_joint: {p: 500,  d: 1, i: 1, i_clamp: 1}
+    $(arg robot_name)wrist_2_joint: {p: 500,  d: 1, i: 1, i_clamp: 1}
+    $(arg robot_name)wrist_3_joint: {p: 10,  d: 0.1, i: 0, i_clamp: 1} 
+  constraints:
+    goal_time: 0.6
+    stopped_velocity_tolerance: 0.05
+    $(arg robot_name)shoulder_pan_joint: {trajectory: 0.1, goal: 0.1}
+    $(arg robot_name)shoulder_lift_joint: {trajectory: 0.1, goal: 0.1}
+    $(arg robot_name)elbow_joint: {trajectory: 0.1, goal: 0.1}
+    $(arg robot_name)wrist_1_joint: {trajectory: 0.1, goal: 0.1}
+    $(arg robot_name)wrist_2_joint: {trajectory: 0.1, goal: 0.1}
+    $(arg robot_name)wrist_3_joint: {trajectory: 0.1, goal: 0.1}
+  stop_trajectory_duration: 0.5
+  state_publish_rate: 50
+  action_monitor_rate: 10
+
+$(arg robot_name)joint_group_eff_controller:
+  type: effort_controllers/JointGroupEffortController
+  joints: *robot_joints

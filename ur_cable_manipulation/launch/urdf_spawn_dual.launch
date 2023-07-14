@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name = "robot1_name"   default = "ur5_"/>
+    <arg name = "robot2_name"   default = "ur5e_"/>
+    <arg name = "gripper1_name"   default = "ur5_gripper_"/>
+    <arg name = "gripper2_name"   default = "ur5e_gripper_"/>
+
+    <arg name = "robot1_x_pos" default = "0.2"/>
+    <arg name = "robot1_y_pos" default = "-0.4"/>
+    <arg name = "robot1_z_pos" default = "0.0"/>
+    <arg name = "robot1_roll"  default = "0.0"/>
+    <arg name = "robot1_pitch" default = "0.0"/>
+    <arg name = "robot1_yaw"   default = "1.57"/>
+
+    <arg name = "robot2_x_pos" default = "-0.2"/>
+    <arg name = "robot2_y_pos" default = "0.4"/>
+    <arg name = "robot2_z_pos" default = "0.0"/>
+    <arg name = "robot2_roll"  default = "0.0"/>
+    <arg name = "robot2_pitch" default = "0.0"/>
+    <arg name = "robot2_yaw"   default = "-1.57"/>
+
+
+    <param name="robot_description" command="$(find xacro)/xacro $(find ur_cable_manipulation)/xacro/ur_dual_arm.xacro
+                                            robot1_name:=$(arg robot1_name)
+                                            robot2_name:=$(arg robot2_name)
+                                            gripper1_name:=$(arg gripper1_name)
+                                            gripper2_name:=$(arg gripper2_name)
+
+                                            robot1_x_pos:=$(arg robot1_x_pos)
+                                            robot1_y_pos:=$(arg robot1_y_pos) 
+                                            robot1_z_pos:=$(arg robot1_z_pos)
+                                            robot1_roll:=$(arg robot1_roll) 
+                                            robot1_pitch:=$(arg robot1_pitch) 
+                                            robot1_yaw:=$(arg robot1_yaw)
+
+                                            robot2_x_pos:=$(arg robot2_x_pos)
+                                            robot2_y_pos:=$(arg robot2_y_pos) 
+                                            robot2_z_pos:=$(arg robot2_z_pos)
+                                            robot2_roll:=$(arg robot2_roll) 
+                                            robot2_pitch:=$(arg robot2_pitch) 
+                                            robot2_yaw:=$(arg robot2_yaw)
+                                            "/>
+    <!-- per fare spawnare il robot nel desisred joint angle, prima lanciare gazebo con argomento paused, poi lanciare il modello ed in fondo tirare -unpaused-->
+    <node   name="robot_description" pkg="gazebo_ros" type="spawn_model" 
+            args="  -param robot_description 
+                    -urdf 
+                    -model dual
+                    -J $(arg robot1_name)shoulder_pan_joint -1.567  
+                    -J $(arg robot1_name)shoulder_lift_joint -0.767 
+                    -J $(arg robot1_name)elbow_joint -1.767 
+                    -J $(arg robot1_name)wrist_1_joint -2.367 
+                    -J $(arg robot1_name)wrist_2_joint 1.567 
+                    -J $(arg robot1_name)wrist_3_joint 0.0
+
+                    -J $(arg robot2_name)shoulder_pan_joint -1.567  
+                    -J $(arg robot2_name)shoulder_lift_joint -0.767 
+                    -J $(arg robot2_name)elbow_joint -1.767 
+                    -J $(arg robot2_name)wrist_1_joint -2.367 
+                    -J $(arg robot2_name)wrist_2_joint 1.567 
+                    -J $(arg robot2_name)wrist_3_joint 0.0
+                    -unpause
+                    " 
+            respawn="false" 
+            output="screen" 
+                    />
+
+
+</launch>

@@ -1,0 +1,1 @@
+To run these programs move them to the src folder and decomment the corresponding cmake lines

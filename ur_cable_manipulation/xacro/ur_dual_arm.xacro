@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="dual">
+  
+  <xacro:arg name="robot1_name" default="ur5_"/>
+  <xacro:arg name="robot2_name" default="ur5e_"/>
+  <xacro:arg name="gripper1_name" default="ur5_"/>
+  <xacro:arg name="gripper2_name" default="ur5e_"/>
+  <xacro:arg name="connected_to" default=""/> <!-- If using a different frame with ${connected_to} param, make sure 'world' frame exists in the TF tree -->
+  
+  <xacro:arg name="robot1_x_pos" default="1.0"/>
+  <xacro:arg name="robot1_y_pos" default="0.0"/>
+  <xacro:arg name="robot1_z_pos" default="0.0"/>
+  <xacro:arg name="robot1_roll"  default="0.0"/>
+  <xacro:arg name="robot1_pitch" default="0.0"/>
+  <xacro:arg name="robot1_yaw"   default="0.0"/>
+
+  <xacro:arg name="robot2_x_pos" default="-1.0"/>
+  <xacro:arg name="robot2_y_pos" default="0.0"/>
+  <xacro:arg name="robot2_z_pos" default="0.0"/>
+  <xacro:arg name="robot2_roll"  default="0.0"/>
+  <xacro:arg name="robot2_pitch" default="0.0"/>
+  <xacro:arg name="robot2_yaw"   default="0.0"/>
+
+  <!-- Include URDFs -->
+  <xacro:include filename="$(find ur_description)/urdf/inc/ur5_macro.xacro"/>
+  <xacro:include filename="$(find ur_description)/urdf/inc/ur5e_macro.xacro"/>
+  <xacro:include filename="$(find robotiq_hand_e)/urdf/robotiq.xacro"/>
+    
+  <!-- Spawn the robots -->
+  <xacro:ur5e_robot prefix="$(arg robot2_name)" />
+  <xacro:ur5_robot prefix="$(arg robot1_name)" />
+  <xacro:robotiq_wiring_fingers gripper_name="$(arg gripper1_name)" parent="$(arg robot1_name)tool0" rpy="0 -1.57 0.0" hardware_interface="hardware_interface/PositionJointInterface"/>
+  <xacro:robotiq_wiring_fingers gripper_name="$(arg gripper2_name)" parent="$(arg robot2_name)tool0" rpy="0 -1.57 0.0" hardware_interface="hardware_interface/PositionJointInterface"/>
+
+
+  <!-- Define the world -->
+    <link name="world"/>
+
+    <joint name="world_robot1" type="fixed">
+      <parent link="world"/>
+      <child link="$(arg robot1_name)base_link"/>
+      <origin xyz="$(arg robot1_x_pos) $(arg robot1_y_pos) $(arg robot1_z_pos)" rpy="$(arg robot1_roll) $(arg robot1_pitch) $(arg robot1_yaw)"/>
+    </joint>
+  
+    <joint name="world_robot2" type="fixed">
+      <parent link="world"/>
+      <child link="$(arg robot2_name)base_link"/>
+      <origin xyz=" $(arg robot2_x_pos) $(arg robot2_y_pos) $(arg robot2_z_pos)" rpy="$(arg robot2_roll) $(arg robot2_pitch) $(arg robot2_yaw)"/>
+    </joint>
+  
+    <!-- Load Gazebo lib and set the robot namespace -->      
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace></robotNamespace>
+            <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+            <legacyModeNS>true</legacyModeNS>
+        </plugin>
+    </gazebo>
+          
+
+
+    <gazebo reference="ur5e_wrist_3_joint">  
+      <provideFeedback>true</provideFeedback>
+    </gazebo>
+
+    <!-- The ft_sensor plugin -->  
+    <gazebo>
+        <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>500.0</updateRate>
+            <topicName>ft_sensor</topicName>
+            <gaussianNoise>0.0</gaussianNoise>
+            <jointName>ur5e_wrist_3_joint</jointName>
+        </plugin>
+    </gazebo>
+
+
+    <gazebo>
+      <plugin name="gazebo_grasp_fix" filename="libgazebo_grasp_fix.so">
+        <arm>
+          <arm_name>ur5e_robot</arm_name>
+          <palm_link> ur5e_wrist_3_link  </palm_link>
+          <gripper_link> ur5e_finger_left </gripper_link>
+          <gripper_link> ur5e_finger_right </gripper_link>
+        </arm>
+        <arm>
+          <arm_name>ur5_robot</arm_name>
+          <palm_link> ur5_wrist_3_link  </palm_link>
+          <gripper_link> ur5_finger_left </gripper_link>
+          <gripper_link> ur5_finger_right </gripper_link>
+          <!-- <gripper_link> ... </gripper_link> -->
+        </arm>
+        <forces_angle_tolerance>100</forces_angle_tolerance>
+        <!-- <update_rate>30</update_rate> -->
+        <update_rate>500</update_rate>
+        <grip_count_threshold>1</grip_count_threshold>
+        <max_grip_count>2</max_grip_count>
+        <release_tolerance>0.05</release_tolerance>
+        <disable_collisions_on_attach>true</disable_collisions_on_attach>
+        <contact_topic>__default_topic__</contact_topic>
+      </plugin>
+    </gazebo>
+
+</robot>
