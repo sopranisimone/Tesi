@@ -41,7 +41,10 @@ public:
     /*! \brief  Transform a force from source frame to target frame
     \returns the transformed force*/
     std::vector<double> tfForceintoBaseLink(std::vector<double> force, std::vector<double> torque, std::string sourceFrame, std::string targetFrame);
+
     
+
+    //--------------------GETTERS AND SETTERS--------------------//
 
     void setBias(std::vector<double> bias){this->bias = bias;}
     /*! \brief  Set the flag to end the calibration*/
