@@ -1,0 +1,59 @@
+controller_list:
+  - name: fake_ur5_arm_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - ur5_shoulder_pan_joint
+      - ur5_shoulder_lift_joint
+      - ur5_elbow_joint
+      - ur5_wrist_1_joint
+      - ur5_wrist_2_joint
+      - ur5_wrist_3_joint
+  - name: fake_ur5_hand_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - ur5_bl_to_leftFinger
+      - ur5_leftFinger_to_rightFinger
+  - name: fake_ur5e_arm_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - ur5e_shoulder_pan_joint
+      - ur5e_shoulder_lift_joint
+      - ur5e_elbow_joint
+      - ur5e_wrist_1_joint
+      - ur5e_wrist_2_joint
+      - ur5e_wrist_3_joint
+  - name: fake_ur5e_hand_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - ur5e_bl_to_leftFinger
+      - ur5e_leftFinger_to_rightFinger
+  - name: fake_dual_arms_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - ur5_shoulder_pan_joint
+      - ur5_shoulder_lift_joint
+      - ur5_elbow_joint
+      - ur5_wrist_1_joint
+      - ur5_wrist_2_joint
+      - ur5_wrist_3_joint
+      - ur5_bl_to_leftFinger
+      - ur5_leftFinger_to_rightFinger
+      - ur5e_shoulder_pan_joint
+      - ur5e_shoulder_lift_joint
+      - ur5e_elbow_joint
+      - ur5e_wrist_1_joint
+      - ur5e_wrist_2_joint
+      - ur5e_wrist_3_joint
+      - ur5e_bl_to_leftFinger
+      - ur5e_leftFinger_to_rightFinger
+initial:  # Define initial robot poses per group
+  - group: ur5_arm
+    pose: ready
+  - group: ur5_hand
+    pose: close
+  - group: ur5e_arm
+    pose: stand
+  - group: ur5e_hand
+    pose: open
+  - group: dual_arms
+    pose: ready

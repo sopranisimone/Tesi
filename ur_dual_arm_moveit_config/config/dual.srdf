@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="dual">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="ur5_arm">
+        <link name="ur5_base_link"/>
+        <link name="ur5_base_link_inertia"/>
+        <link name="ur5_shoulder_link"/>
+        <link name="ur5_upper_arm_link"/>
+        <link name="ur5_forearm_link"/>
+        <link name="ur5_wrist_1_link"/>
+        <link name="ur5_wrist_2_link"/>
+        <link name="ur5_wrist_3_link"/>
+        <joint name="ur5_shoulder_pan_joint"/>
+        <joint name="ur5_shoulder_lift_joint"/>
+        <joint name="ur5_elbow_joint"/>
+        <joint name="ur5_wrist_1_joint"/>
+        <joint name="ur5_wrist_2_joint"/>
+        <joint name="ur5_wrist_3_joint"/>
+        <chain base_link="ur5_base_link" tip_link="ur5_finger_tip"/>
+    </group>
+    <group name="ur5_hand">
+        <link name="ur5_robotiq_hand"/>
+        <link name="ur5_finger_left"/>
+        <link name="ur5_finger_right"/>
+        <link name="ur5_finger_tip"/>
+        <joint name="ur5_bl_to_leftFinger"/>
+        <joint name="ur5_leftFinger_to_rightFinger"/>
+    </group>
+    <group name="ur5e_arm">
+        <link name="ur5e_base_link"/>
+        <link name="ur5e_base_link_inertia"/>
+        <link name="ur5e_shoulder_link"/>
+        <link name="ur5e_upper_arm_link"/>
+        <link name="ur5e_forearm_link"/>
+        <link name="ur5e_wrist_1_link"/>
+        <link name="ur5e_wrist_2_link"/>
+        <link name="ur5e_wrist_3_link"/>
+        <joint name="ur5e_shoulder_pan_joint"/>
+        <joint name="ur5e_shoulder_lift_joint"/>
+        <joint name="ur5e_elbow_joint"/>
+        <joint name="ur5e_wrist_1_joint"/>
+        <joint name="ur5e_wrist_2_joint"/>
+        <joint name="ur5e_wrist_3_joint"/>
+        <chain base_link="ur5e_base_link" tip_link="ur5e_finger_tip"/>
+    </group>
+    <group name="ur5e_hand">
+        <link name="ur5e_finger_right"/>
+        <link name="ur5e_finger_left"/>
+        <link name="ur5e_robotiq_hand"/>
+        <link name="ur5e_finger_tip"/>
+        <joint name="ur5e_bl_to_leftFinger"/>
+        <joint name="ur5e_leftFinger_to_rightFinger"/>
+    </group>
+    <group name="dual_arms">
+        <link name="ur5e_base_link"/>
+        <link name="ur5e_base_link_inertia"/>
+        <link name="ur5e_shoulder_link"/>
+        <link name="ur5e_upper_arm_link"/>
+        <link name="ur5e_forearm_link"/>
+        <link name="ur5e_wrist_1_link"/>
+        <link name="ur5e_wrist_2_link"/>
+        <link name="ur5e_wrist_3_link"/>
+        <link name="ur5e_finger_left"/>
+        <link name="ur5e_finger_right"/>
+        <link name="ur5e_finger_tip"/>
+        <joint name="ur5_shoulder_pan_joint"/>
+        <joint name="ur5_shoulder_lift_joint"/>
+        <joint name="ur5_elbow_joint"/>
+        <joint name="ur5_wrist_1_joint"/>
+        <joint name="ur5_wrist_2_joint"/>
+        <joint name="ur5_wrist_3_joint"/>
+        <joint name="ur5e_shoulder_pan_joint"/>
+        <joint name="ur5e_shoulder_lift_joint"/>
+        <joint name="ur5e_elbow_joint"/>
+        <joint name="ur5e_wrist_1_joint"/>
+        <joint name="ur5e_wrist_2_joint"/>
+        <joint name="ur5e_wrist_3_joint"/>
+        <joint name="ur5_bl_to_leftFinger"/>
+        <joint name="ur5_leftFinger_to_rightFinger"/>
+        <joint name="ur5e_leftFinger_to_rightFinger"/>
+        <joint name="ur5e_bl_to_leftFinger"/>
+    </group>
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="stand" group="ur5e_arm">
+        <joint name="ur5e_elbow_joint" value="0"/>
+        <joint name="ur5e_shoulder_lift_joint" value="-1.5"/>
+        <joint name="ur5e_shoulder_pan_joint" value="0"/>
+        <joint name="ur5e_wrist_1_joint" value="0"/>
+        <joint name="ur5e_wrist_2_joint" value="0"/>
+        <joint name="ur5e_wrist_3_joint" value="0"/>
+    </group_state>
+    <group_state name="ready" group="ur5_arm">
+        <joint name="ur5_elbow_joint" value="1.5429"/>
+        <joint name="ur5_shoulder_lift_joint" value="-2.2679"/>
+        <joint name="ur5_shoulder_pan_joint" value="1.4499"/>
+        <joint name="ur5_wrist_1_joint" value="0.2602"/>
+        <joint name="ur5_wrist_2_joint" value="-0.1115"/>
+        <joint name="ur5_wrist_3_joint" value="0"/>
+    </group_state>
+    <group_state name="ready" group="ur5e_arm">
+        <joint name="ur5e_elbow_joint" value="1.2826"/>
+        <joint name="ur5e_shoulder_lift_joint" value="-1.5"/>
+        <joint name="ur5e_shoulder_pan_joint" value="-0.4833"/>
+        <joint name="ur5e_wrist_1_joint" value="6.2831"/>
+        <joint name="ur5e_wrist_2_joint" value="0"/>
+        <joint name="ur5e_wrist_3_joint" value="0"/>
+    </group_state>
+    <group_state name="open" group="ur5e_hand">
+        <joint name="ur5e_bl_to_leftFinger" value="0.0225"/>
+        <joint name="ur5e_leftFinger_to_rightFinger" value="0.045"/>
+    </group_state>
+    <group_state name="close" group="ur5e_hand">
+        <joint name="ur5e_bl_to_leftFinger" value="0"/>
+        <joint name="ur5e_leftFinger_to_rightFinger" value="0"/>
+    </group_state>
+    <group_state name="close" group="ur5_hand">
+        <joint name="ur5_bl_to_leftFinger" value="0"/>
+        <joint name="ur5_leftFinger_to_rightFinger" value="0"/>
+    </group_state>
+    <group_state name="open" group="ur5_hand">
+        <joint name="ur5_bl_to_leftFinger" value="0.0225"/>
+        <joint name="ur5_leftFinger_to_rightFinger" value="0.045"/>
+    </group_state>
+    <group_state name="ready" group="dual_arms">
+        <joint name="ur5_bl_to_leftFinger" value="0.0225"/>
+        <joint name="ur5_elbow_joint" value="-1.8031"/>
+        <joint name="ur5_leftFinger_to_rightFinger" value="0.045"/>
+        <joint name="ur5_shoulder_lift_joint" value="-1.3756"/>
+        <joint name="ur5_shoulder_pan_joint" value="0"/>
+        <joint name="ur5_wrist_1_joint" value="0"/>
+        <joint name="ur5_wrist_2_joint" value="0.5577"/>
+        <joint name="ur5_wrist_3_joint" value="-1.0782"/>
+        <joint name="ur5e_bl_to_leftFinger" value="0.0225"/>
+        <joint name="ur5e_elbow_joint" value="1.357"/>
+        <joint name="ur5e_leftFinger_to_rightFinger" value="0.045"/>
+        <joint name="ur5e_shoulder_lift_joint" value="-1.4499"/>
+        <joint name="ur5e_shoulder_pan_joint" value="-0.2602"/>
+        <joint name="ur5e_wrist_1_joint" value="0"/>
+        <joint name="ur5e_wrist_2_joint" value="0"/>
+        <joint name="ur5e_wrist_3_joint" value="2.4166"/>
+    </group_state>
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="ur5_hand" parent_link="ur5_wrist_3_link" group="ur5_hand"/>
+    <end_effector name="ur5e_hand" parent_link="ur5e_wrist_3_link" group="ur5e_hand"/>
+    <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
+    <virtual_joint name="fixed_frame_ur5" type="fixed" parent_frame="world" child_link="ur5_base_link"/>
+    <virtual_joint name="fixed_frame_ur5e" type="fixed" parent_frame="world" child_link="ur5e_base_link"/>
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="ur5_base_link_inertia" link2="ur5_shoulder_link" reason="Adjacent"/>
+    <disable_collisions link1="ur5_base_link_inertia" link2="ur5e_base_link_inertia" reason="Adjacent"/>
+    <disable_collisions link1="ur5_base_link_inertia" link2="ur5e_finger_left" reason="Never"/>
+    <disable_collisions link1="ur5_base_link_inertia" link2="ur5e_finger_right" reason="Never"/>
+    <disable_collisions link1="ur5_base_link_inertia" link2="ur5e_forearm_link" reason="Never"/>
+    <disable_collisions link1="ur5_base_link_inertia" link2="ur5e_robotiq_hand" reason="Never"/>
+    <disable_collisions link1="ur5_base_link_inertia" link2="ur5e_shoulder_link" reason="Never"/>
+    <disable_collisions link1="ur5_base_link_inertia" link2="ur5e_upper_arm_link" reason="Never"/>
+    <disable_collisions link1="ur5_base_link_inertia" link2="ur5e_wrist_1_link" reason="Never"/>
+    <disable_collisions link1="ur5_base_link_inertia" link2="ur5e_wrist_2_link" reason="Never"/>
+    <disable_collisions link1="ur5_base_link_inertia" link2="ur5e_wrist_3_link" reason="Never"/>
+    <disable_collisions link1="ur5_finger_left" link2="ur5_finger_right" reason="Default"/>
+    <disable_collisions link1="ur5_finger_left" link2="ur5_robotiq_hand" reason="Adjacent"/>
+    <disable_collisions link1="ur5_finger_left" link2="ur5_wrist_1_link" reason="Never"/>
+    <disable_collisions link1="ur5_finger_left" link2="ur5_wrist_2_link" reason="Never"/>
+    <disable_collisions link1="ur5_finger_left" link2="ur5_wrist_3_link" reason="Never"/>
+    <disable_collisions link1="ur5_finger_left" link2="ur5e_base_link_inertia" reason="Never"/>
+    <disable_collisions link1="ur5_finger_left" link2="ur5e_finger_left" reason="Never"/>
+    <disable_collisions link1="ur5_finger_left" link2="ur5e_finger_right" reason="Never"/>
+    <disable_collisions link1="ur5_finger_left" link2="ur5e_forearm_link" reason="Never"/>
+    <disable_collisions link1="ur5_finger_left" link2="ur5e_robotiq_hand" reason="Never"/>
+    <disable_collisions link1="ur5_finger_left" link2="ur5e_shoulder_link" reason="Never"/>
+    <disable_collisions link1="ur5_finger_left" link2="ur5e_upper_arm_link" reason="Never"/>
+    <disable_collisions link1="ur5_finger_left" link2="ur5e_wrist_1_link" reason="Never"/>
+    <disable_collisions link1="ur5_finger_left" link2="ur5e_wrist_2_link" reason="Never"/>
+    <disable_collisions link1="ur5_finger_left" link2="ur5e_wrist_3_link" reason="Never"/>
+    <disable_collisions link1="ur5_finger_right" link2="ur5_robotiq_hand" reason="Adjacent"/>
+    <disable_collisions link1="ur5_finger_right" link2="ur5_wrist_1_link" reason="Never"/>
+    <disable_collisions link1="ur5_finger_right" link2="ur5_wrist_2_link" reason="Never"/>
+    <disable_collisions link1="ur5_finger_right" link2="ur5_wrist_3_link" reason="Never"/>
+    <disable_collisions link1="ur5_finger_right" link2="ur5e_base_link_inertia" reason="Never"/>
+    <disable_collisions link1="ur5_finger_right" link2="ur5e_finger_left" reason="Never"/>
+    <disable_collisions link1="ur5_finger_right" link2="ur5e_finger_right" reason="Never"/>
+    <disable_collisions link1="ur5_finger_right" link2="ur5e_forearm_link" reason="Never"/>
+    <disable_collisions link1="ur5_finger_right" link2="ur5e_robotiq_hand" reason="Never"/>
+    <disable_collisions link1="ur5_finger_right" link2="ur5e_shoulder_link" reason="Never"/>
+    <disable_collisions link1="ur5_finger_right" link2="ur5e_upper_arm_link" reason="Never"/>
+    <disable_collisions link1="ur5_finger_right" link2="ur5e_wrist_1_link" reason="Never"/>
+    <disable_collisions link1="ur5_finger_right" link2="ur5e_wrist_2_link" reason="Never"/>
+    <disable_collisions link1="ur5_finger_right" link2="ur5e_wrist_3_link" reason="Never"/>
+    <disable_collisions link1="ur5_forearm_link" link2="ur5_upper_arm_link" reason="Adjacent"/>
+    <disable_collisions link1="ur5_forearm_link" link2="ur5_wrist_1_link" reason="Adjacent"/>
+    <disable_collisions link1="ur5_forearm_link" link2="ur5e_base_link_inertia" reason="Never"/>
+    <disable_collisions link1="ur5_forearm_link" link2="ur5e_finger_left" reason="Never"/>
+    <disable_collisions link1="ur5_forearm_link" link2="ur5e_finger_right" reason="Never"/>
+    <disable_collisions link1="ur5_forearm_link" link2="ur5e_forearm_link" reason="Never"/>
+    <disable_collisions link1="ur5_forearm_link" link2="ur5e_robotiq_hand" reason="Never"/>
+    <disable_collisions link1="ur5_forearm_link" link2="ur5e_shoulder_link" reason="Never"/>
+    <disable_collisions link1="ur5_forearm_link" link2="ur5e_upper_arm_link" reason="Never"/>
+    <disable_collisions link1="ur5_forearm_link" link2="ur5e_wrist_1_link" reason="Never"/>
+    <disable_collisions link1="ur5_forearm_link" link2="ur5e_wrist_2_link" reason="Never"/>
+    <disable_collisions link1="ur5_forearm_link" link2="ur5e_wrist_3_link" reason="Never"/>
+    <disable_collisions link1="ur5_robotiq_hand" link2="ur5_wrist_1_link" reason="Never"/>
+    <disable_collisions link1="ur5_robotiq_hand" link2="ur5_wrist_2_link" reason="Never"/>
+    <disable_collisions link1="ur5_robotiq_hand" link2="ur5_wrist_3_link" reason="Adjacent"/>
+    <disable_collisions link1="ur5_robotiq_hand" link2="ur5e_base_link_inertia" reason="Never"/>
+    <disable_collisions link1="ur5_robotiq_hand" link2="ur5e_finger_left" reason="Never"/>
+    <disable_collisions link1="ur5_robotiq_hand" link2="ur5e_finger_right" reason="Never"/>
+    <disable_collisions link1="ur5_robotiq_hand" link2="ur5e_forearm_link" reason="Never"/>
+    <disable_collisions link1="ur5_robotiq_hand" link2="ur5e_robotiq_hand" reason="Never"/>
+    <disable_collisions link1="ur5_robotiq_hand" link2="ur5e_shoulder_link" reason="Never"/>
+    <disable_collisions link1="ur5_robotiq_hand" link2="ur5e_upper_arm_link" reason="Never"/>
+    <disable_collisions link1="ur5_robotiq_hand" link2="ur5e_wrist_1_link" reason="Never"/>
+    <disable_collisions link1="ur5_robotiq_hand" link2="ur5e_wrist_2_link" reason="Never"/>
+    <disable_collisions link1="ur5_robotiq_hand" link2="ur5e_wrist_3_link" reason="Never"/>
+    <disable_collisions link1="ur5_shoulder_link" link2="ur5_upper_arm_link" reason="Adjacent"/>
+    <disable_collisions link1="ur5_shoulder_link" link2="ur5e_base_link_inertia" reason="Never"/>
+    <disable_collisions link1="ur5_shoulder_link" link2="ur5e_finger_left" reason="Never"/>
+    <disable_collisions link1="ur5_shoulder_link" link2="ur5e_finger_right" reason="Never"/>
+    <disable_collisions link1="ur5_shoulder_link" link2="ur5e_forearm_link" reason="Never"/>
+    <disable_collisions link1="ur5_shoulder_link" link2="ur5e_robotiq_hand" reason="Never"/>
+    <disable_collisions link1="ur5_shoulder_link" link2="ur5e_shoulder_link" reason="Never"/>
+    <disable_collisions link1="ur5_shoulder_link" link2="ur5e_upper_arm_link" reason="Never"/>
+    <disable_collisions link1="ur5_shoulder_link" link2="ur5e_wrist_1_link" reason="Never"/>
+    <disable_collisions link1="ur5_shoulder_link" link2="ur5e_wrist_2_link" reason="Never"/>
+    <disable_collisions link1="ur5_shoulder_link" link2="ur5e_wrist_3_link" reason="Never"/>
+    <disable_collisions link1="ur5_upper_arm_link" link2="ur5e_base_link_inertia" reason="Never"/>
+    <disable_collisions link1="ur5_upper_arm_link" link2="ur5e_finger_left" reason="Never"/>
+    <disable_collisions link1="ur5_upper_arm_link" link2="ur5e_finger_right" reason="Never"/>
+    <disable_collisions link1="ur5_upper_arm_link" link2="ur5e_forearm_link" reason="Never"/>
+    <disable_collisions link1="ur5_upper_arm_link" link2="ur5e_robotiq_hand" reason="Never"/>
+    <disable_collisions link1="ur5_upper_arm_link" link2="ur5e_shoulder_link" reason="Never"/>
+    <disable_collisions link1="ur5_upper_arm_link" link2="ur5e_upper_arm_link" reason="Never"/>
+    <disable_collisions link1="ur5_upper_arm_link" link2="ur5e_wrist_1_link" reason="Never"/>
+    <disable_collisions link1="ur5_upper_arm_link" link2="ur5e_wrist_2_link" reason="Never"/>
+    <disable_collisions link1="ur5_upper_arm_link" link2="ur5e_wrist_3_link" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_1_link" link2="ur5_wrist_2_link" reason="Adjacent"/>
+    <disable_collisions link1="ur5_wrist_1_link" link2="ur5_wrist_3_link" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_1_link" link2="ur5e_base_link_inertia" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_1_link" link2="ur5e_finger_left" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_1_link" link2="ur5e_finger_right" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_1_link" link2="ur5e_forearm_link" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_1_link" link2="ur5e_robotiq_hand" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_1_link" link2="ur5e_shoulder_link" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_1_link" link2="ur5e_upper_arm_link" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_1_link" link2="ur5e_wrist_1_link" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_1_link" link2="ur5e_wrist_2_link" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_1_link" link2="ur5e_wrist_3_link" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_2_link" link2="ur5_wrist_3_link" reason="Adjacent"/>
+    <disable_collisions link1="ur5_wrist_2_link" link2="ur5e_base_link_inertia" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_2_link" link2="ur5e_finger_left" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_2_link" link2="ur5e_finger_right" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_2_link" link2="ur5e_forearm_link" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_2_link" link2="ur5e_robotiq_hand" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_2_link" link2="ur5e_shoulder_link" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_2_link" link2="ur5e_upper_arm_link" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_2_link" link2="ur5e_wrist_1_link" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_2_link" link2="ur5e_wrist_2_link" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_2_link" link2="ur5e_wrist_3_link" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_3_link" link2="ur5e_base_link_inertia" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_3_link" link2="ur5e_finger_left" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_3_link" link2="ur5e_finger_right" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_3_link" link2="ur5e_forearm_link" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_3_link" link2="ur5e_robotiq_hand" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_3_link" link2="ur5e_shoulder_link" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_3_link" link2="ur5e_upper_arm_link" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_3_link" link2="ur5e_wrist_1_link" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_3_link" link2="ur5e_wrist_2_link" reason="Never"/>
+    <disable_collisions link1="ur5_wrist_3_link" link2="ur5e_wrist_3_link" reason="Never"/>
+    <disable_collisions link1="ur5e_base_link_inertia" link2="ur5e_shoulder_link" reason="Adjacent"/>
+    <disable_collisions link1="ur5e_finger_left" link2="ur5e_finger_right" reason="Default"/>
+    <disable_collisions link1="ur5e_finger_left" link2="ur5e_robotiq_hand" reason="Adjacent"/>
+    <disable_collisions link1="ur5e_finger_left" link2="ur5e_wrist_1_link" reason="Never"/>
+    <disable_collisions link1="ur5e_finger_left" link2="ur5e_wrist_2_link" reason="Never"/>
+    <disable_collisions link1="ur5e_finger_left" link2="ur5e_wrist_3_link" reason="Never"/>
+    <disable_collisions link1="ur5e_finger_right" link2="ur5e_robotiq_hand" reason="Adjacent"/>
+    <disable_collisions link1="ur5e_finger_right" link2="ur5e_wrist_1_link" reason="Never"/>
+    <disable_collisions link1="ur5e_finger_right" link2="ur5e_wrist_2_link" reason="Never"/>
+    <disable_collisions link1="ur5e_finger_right" link2="ur5e_wrist_3_link" reason="Never"/>
+    <disable_collisions link1="ur5e_forearm_link" link2="ur5e_upper_arm_link" reason="Adjacent"/>
+    <disable_collisions link1="ur5e_forearm_link" link2="ur5e_wrist_1_link" reason="Adjacent"/>
+    <disable_collisions link1="ur5e_forearm_link" link2="ur5e_wrist_2_link" reason="Never"/>
+    <disable_collisions link1="ur5e_robotiq_hand" link2="ur5e_wrist_1_link" reason="Never"/>
+    <disable_collisions link1="ur5e_robotiq_hand" link2="ur5e_wrist_2_link" reason="Never"/>
+    <disable_collisions link1="ur5e_robotiq_hand" link2="ur5e_wrist_3_link" reason="Adjacent"/>
+    <disable_collisions link1="ur5e_shoulder_link" link2="ur5e_upper_arm_link" reason="Adjacent"/>
+    <disable_collisions link1="ur5e_wrist_1_link" link2="ur5e_wrist_2_link" reason="Adjacent"/>
+    <disable_collisions link1="ur5e_wrist_1_link" link2="ur5e_wrist_3_link" reason="Never"/>
+    <disable_collisions link1="ur5e_wrist_2_link" link2="ur5e_wrist_3_link" reason="Adjacent"/>
+</robot>
